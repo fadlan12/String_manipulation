@@ -27,7 +27,7 @@ public class Parse {
 	String s;
 	
 	
-	
+	// reads input  from console and creates string s
 	public String getSentence()  {
 				
 		System.out.println("Enter sentence or phrase : ");
@@ -43,7 +43,9 @@ public class Parse {
 		return s;
 	 
 	  }
-		
+	// splits the string into two arrays with reg expressions,
+	//one splits into words and the other splits into non alphanumeric charactors
+	
 	public String parseSentence(String sentence){
 		Scanner ch = new Scanner(sentence).useDelimiter("[^A-Za-z0-9]+");
 		Scanner na = new Scanner(sentence).useDelimiter("[^\\W]+");
@@ -53,11 +55,12 @@ public class Parse {
 		String [] naArray = new String [30];
 		
 		int i = 0, f = 0;
+		// splits word array into char arrays
 		while(ch.hasNext()){
 			wordArray[i] = ch.next().toString();
 			i++;				
 		}
-		
+		// places non alpha chars into naArray
 		while(na.hasNext()){	
 			Pattern pattern = Pattern.compile("[0-9a-zA-Z]");
 			String next = na.next().toString();
@@ -84,15 +87,20 @@ public class Parse {
 			lettersArray[n] = wordArray[n];
 		}		
 		int q = 0;
+		// reads word letterarray into split word, and appends back into order with new counts
+		// for letters inbetween first and last letter in word. 
+		// checks for first character being a letter or not and prepending nonalpha to begining of new
+		// string.
 		for (int k =0; k< i; k++){
 			splitWord =	lettersArray[k].toCharArray();
-			
+		// checks for first character being a letter or not and prepending nonalpha to begining of new
+		// string.
 			if (!Character.isDigit(sentence.charAt(0)) && !Character.isLetter(sentence.charAt(0))&& k == 0){
 				builder.append(notAlpha[0]);
 				q++;
 			}	
 			
-		
+		// checks for size of word  and appends to builder the new set of characters.
 			if(splitWord.length > 2){				
 				String condensedWord = splitWord[0] + String.valueOf(splitWord.length - 2)+  splitWord[splitWord.length-1] ;
 				builder.append(condensedWord);										
